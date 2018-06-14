@@ -85,7 +85,9 @@ class Filter extends Component {
     return (
       <div className='Filter'>
         <img alt=''/>
-        <input type='text' />
+        <input 
+          onChange={ (e) => this.props.updateSearchString(e.target.value) }
+          type='text' />
       </div>
     )
   }
@@ -112,7 +114,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      serverData: {}
+      serverData: {},
+      filterString: ''
     }
   }
 
@@ -122,28 +125,35 @@ class App extends Component {
     }, 1000)
   }
 
+  updateSearchString = (filterString) => {
+    this.setState({ filterString })
+  }
+
   render() {
+    const { user } = this.state.serverData;
+
     return (
       <div className="App">
         {
-          this.state.serverData.user ? 
+          user ? 
           <div>
-            <h1>{ this.state.serverData.user.name }'s Playlists </h1>
+            <h1>{ user.name }'s Playlists </h1>
             <PlaylistCounter 
-              playlists={ this.state.serverData.user.playlists }
+              playlists={ user.playlists }
             />
             <HoursCounter 
-              playlists={ this.state.serverData.user.playlists }
+              playlists={ user.playlists }
             />
-          <Filter />
-          {
-            this.state.serverData.user.playlists.map((playlist, i) => {
-              return <Playlist { ...playlist } key={i} />;
-            })
-          }
-            </div> :
-            <h1>Loading...</h1>
-
+            <Filter updateSearchString={ this.updateSearchString }/>
+            {
+              user.playlists.filter(playlist => {
+                return playlist.name.includes(this.state.filterString);
+              }).map((playlist, i) => {
+                return <Playlist { ...playlist } key={i} />;
+              })
+            }
+          </div> :
+          <h1>Loading...</h1>
         }
       </div>
     );
