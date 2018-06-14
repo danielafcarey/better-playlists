@@ -1,0 +1,11 @@
+h1,
+.Aggregate,
+.Filter {
+  text-align: center;
+}
+
+.Playlist {
+  text-align: left;
+  display: inline-block;
+  margin: 20px;
+}
