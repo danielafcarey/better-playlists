@@ -8,10 +8,10 @@ let fakeServerData = {
       {
         name: 'Playlist1',
         songs: [
-          { name: 'song1',
+          { name: 'donna',
             duration: 1134
           }, 
-          { name: 'song2',
+          { name: 'hector',
             duration: 2134,
           } 
         ]
@@ -19,10 +19,10 @@ let fakeServerData = {
       {
         name: 'Playlist2',
         songs: [
-          { name: 'song1',
+          { name: 'barb',
             duration: 1134
           }, 
-          { name: 'song2',
+          { name: 'helen',
             duration: 2134,
           } 
         ]
@@ -30,10 +30,10 @@ let fakeServerData = {
       {
         name: 'Playlist3',
         songs: [
-          { name: 'song1',
+          { name: 'love',
             duration: 112
           }, 
-          { name: 'song2',
+          { name: 'yoooooo',
             duration: 2124,
           } 
         ]
@@ -41,10 +41,10 @@ let fakeServerData = {
       {
         name: 'Playlist4',
         songs: [
-          { name: 'song1',
+          { name: 'dingus',
             duration: 1235
           }, 
-          { name: 'song2',
+          { name: 'dingusii',
             duration: 235134,
           } 
         ]
@@ -93,13 +93,15 @@ class Filter extends Component {
 
 class Playlist extends Component {
   render() {
+    let songs = this.props.songs.map((song, i) => {
+      return <li key={i}>{song.name}</li>
+    })
     return (
       <div className='Playlist'>
         <img alt=''/>
-        <h3>Playlist Name</h3>
+        <h3>{ this.props.name }</h3>
         <ul>
-          <li>Song 1</li> 
-          <li>Song 2</li>
+          { songs }
         </ul>
       </div>
     )
@@ -133,14 +135,16 @@ class App extends Component {
             <HoursCounter 
               playlists={ this.state.serverData.user.playlists }
             />
-          </div> :
+          <Filter />
+          {
+            this.state.serverData.user.playlists.map((playlist, i) => {
+              return <Playlist { ...playlist } key={i} />;
+            })
+          }
+            </div> :
             <h1>Loading...</h1>
+
         }
-        <Filter />
-        <Playlist />
-        <Playlist />
-        <Playlist />
-        <Playlist />
       </div>
     );
   }
