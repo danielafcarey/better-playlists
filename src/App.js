@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class Aggregate extends Component {
@@ -16,7 +15,7 @@ class Filter extends Component {
   render() {
     return (
       <div className='Filter'>
-        <img />
+        <img alt=''/>
         <input type='text' />
       </div>
     )
@@ -27,7 +26,7 @@ class Playlist extends Component {
   render() {
     return (
       <div className='Playlist'>
-        <img />
+        <img alt=''/>
         <h3>Playlist Name</h3>
         <ul>
           <li>Song 1</li> 
