@@ -131,6 +131,10 @@ class App extends Component {
 
   render() {
     const { user } = this.state.serverData;
+    let playlistsToRender = user ? 
+      user.playlists.filter(playlist => {
+        return playlist.name.includes(this.state.filterString);
+      }) : [];
 
     return (
       <div className="App">
@@ -139,16 +143,14 @@ class App extends Component {
           <div>
             <h1>{ user.name }'s Playlists </h1>
             <PlaylistCounter 
-              playlists={ user.playlists }
+              playlists={ playlistsToRender }
             />
             <HoursCounter 
-              playlists={ user.playlists }
+              playlists={ playlistsToRender }
             />
             <Filter updateSearchString={ this.updateSearchString }/>
             {
-              user.playlists.filter(playlist => {
-                return playlist.name.includes(this.state.filterString);
-              }).map((playlist, i) => {
+              playlistsToRender.map((playlist, i) => {
                 return <Playlist { ...playlist } key={i} />;
               })
             }
